@@ -1,13 +1,10 @@
-# firstProject
-First project in which I deal for the first time with some programming tool like pandas, scikit-learn, SQL
-
-
+# Medical Dataset Analysis - Diabetes
 
 Data Analysis and predictive modeling on real dataset:
 
-    Analysis and modeling of a real dataset (energy-industrial sector)
+    Analysis and modeling of a real dataset (medical sector - diabetes prediction)
     Data cleaning, transformation, and exploration (EDA) using Python
-    Implementation of basic machine learning models for predicting variables of interest
+    Implementation of basic machine learning models (regression for HbA1c - Classification of diabetic patient/non-diabetic patient) for predicting variables of interest
     Visualization and interpretation of results trough graphs and performance metrics
 
-Tools: Python (pandas, numpy, matplotlib), scikit-learn, SQL
+Tools: Python (pandas, numpy, matplotlib, seaborn), scikit-learn
