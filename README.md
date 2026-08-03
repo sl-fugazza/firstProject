@@ -8,7 +8,9 @@
 
 ## Project Overview
 
-This project investigates whether routinely collected clinical and anthropometric measurements can be used to predict **glycated hemoglobin (HbA1c)** through Machine Learning techniques.
+This repository was developed as a personal Machine Learning project to practice the complete workflow of a supervised regression task using real clinical data.
+
+The project investigates whether clinical measurements can be used to predict **glycated hemoglobin (HbA1c)** through Machine Learning techniques.
 
 The repository documents the complete workflow of a supervised regression problem, covering:
 
@@ -19,13 +21,11 @@ The repository documents the complete workflow of a supervised regression proble
 - Hyperparameter optimization
 - Feature importance analysis
 
-Particular attention is devoted to **preventing data leakage**, ensuring that every data-driven transformation is performed exclusively on the training set.
-
 ---
 
 ## Dataset
 
-The dataset contains demographic, anthropometric and laboratory measurements collected from patients, including:
+The dataset contains general information and clinical measurements collected from patients, including:
 
 - Age
 - Gender
@@ -38,62 +38,76 @@ The dataset contains demographic, anthropometric and laboratory measurements col
 
 The objective is to predict **HbA1c (`glyhb`)**, an important biomarker used in diabetes diagnosis and long-term glucose monitoring.
 
+Once HbA1c has been predicted through a regression model, patients can also be classified according to standard clinical thresholds:
+
+- Healthy (HbA1c < 5.7)
+- Pre-diabetic (5.7 ≤ HbA1c < 6.5)
+- Diabetic (HbA1c ≥ 6.5)
+
+The dataset used in this project was obtained from the public **[Diabetes Dataset](https://www.kaggle.com/datasets/imtkaggleteam/diabetes)** available on Kaggle.
+
 ---
 
 ## Methodological Pipeline
 
 The project follows a modular pipeline designed to mirror a real-world Machine Learning workflow.
 
-1. **Exploratory Data Analysis (EDA)**
-   - Missing value analysis
-   - Distribution analysis
-   - Outlier detection
-   - Correlation analysis
-   - Clinical interpretation of variables
+### 1. Exploratory Data Analysis (EDA)
 
-2. **Train-Test Split**
-   - Data are split before any statistical transformation to avoid information leakage.
+- Missing value analysis
+- Distribution analysis
+- Outlier detection
+- Correlation analysis
+- Clinical interpretation of variables
 
-3. **Feature Engineering**
-   Creation of clinically meaningful features, including:
+### 2. Train-Test Split
 
-   - Body Mass Index (BMI)
-   - Waist-to-Hip Ratio (WHR)
-   - Mean Arterial Pressure (MAP)
-   - Pulse Pressure (PP)
-   - Polynomial features and interaction terms
+Data are split before any statistical transformation to avoid information leakage.
 
-4. **Preprocessing**
-   - Missing value imputation (`KNNImputer`)
-   - Feature scaling
-   - Pipeline-based transformations
+### 3. Feature Engineering
 
-5. **Model Development**
-   - Random Forest Regressor
-   - K-Fold Cross Validation
-   - Hyperparameter optimization using `RandomizedSearchCV`
+Creation of clinically inspired features, including:
 
-6. **Feature Selection**
-   - Model-based importance analysis (`feature_importances_`)
-   - Removal of low-informative variables
+- Body Mass Index (BMI)
+- Waist-to-Hip Ratio (WHR)
+- Mean Arterial Pressure (MAP)
+- Pulse Pressure (PP)
+- Polynomial features (Age²) and interaction terms (Age × Chol)
+
+### 4. Preprocessing
+
+- Missing value imputation (`KNNImputer`)
+- Feature scaling
+- Pipeline-based transformations
+
+### 5. Model Development
+
+- Random Forest Regressor
+- K-Fold Cross Validation
+- Hyperparameter optimization using `RandomizedSearchCV`
+
+### 6. Feature Selection
+
+- Model-based importance analysis (`feature_importances_`)
+- Removal of low-informative variables
 
 ---
 
 ## Main Results
 
-**Final Model**
+### Final Model
 
 - Random Forest Regressor
 - Hyperparameter optimization with `RandomizedSearchCV`
 
-**Performance on the Test Set**
+### Performance on the Test Set
 
 - **Mean Squared Error (log scale):** ~0.0425
 - **R² Score:** ~0.54
 
 The obtained performance indicates that routinely available clinical measurements explain over half of the variability in glycated hemoglobin levels.
 
-Although the prediction cannot fully capture the complexity of diabetes progression, the results demonstrate that meaningful predictive information can be extracted from standard clinical and anthropometric measurements.
+The main goal of this project was not to achieve the highest possible predictive performance, but to build a complete end-to-end Machine Learning pipeline that resembles a real Data Science project.
 
 ---
 
@@ -113,71 +127,63 @@ diabetes-ml-prediction/
 
 ## How to Run
 
-Clone the repository
+Clone the repository:
 
 ```bash
 git clone https://github.com/your-username/diabetes-ml-prediction.git
 cd diabetes-ml-prediction
 ```
 
-Install the required dependencies
+Install the required dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Run the notebooks in numerical order.
+Run the notebooks in the following order:
 
-The project is compatible with both **Google Colab** and **local Python environments**, using dynamic paths managed through `pathlib`.
+1. `diabetes_regression_EDA.ipynb`
+2. `diabetes_regression_Preprocessing.ipynb`
+3. `diabetes_regression_MLmodel.ipynb`
+
+The project is compatible with both **Google Colab** and **local Python environments**.
+
+Before running the notebooks, update the project folder path at the beginning of each notebook.
 
 ---
 
 ## Tech Stack
 
-**Programming Language**
+### Programming Language
 
 - Python 3.8+
 
-**Data Analysis**
+### Data Analysis
 
 - Pandas
 - NumPy
 
-**Visualization**
+### Visualization
 
 - Matplotlib
 - Seaborn
 
-**Machine Learning**
+### Machine Learning
 
 - Scikit-Learn
 
-**Statistical Analysis**
+### Statistical Analysis
 
 - Statsmodels
 
 ---
 
-## Skills Demonstrated
-
-- Exploratory Data Analysis (EDA)
-- Missing Data Analysis
-- Clinical Feature Engineering
-- Data Leakage Prevention
-- Machine Learning Regression
-- Hyperparameter Optimization
-- Cross Validation
-- Model Evaluation
-- Feature Importance Analysis
-
----
-
 ## Future Improvements
 
-Potential extensions of this project include:
+Possible future improvements include:
 
-- Comparison with Gradient Boosting models (XGBoost, LightGBM)
-- SHAP analysis for model interpretability
+- Comparing the Random Forest model with Gradient Boosting methods (XGBoost, LightGBM)
+- Using SHAP to improve model interpretability
 - Recursive Feature Elimination (RFE)
-- Stacking and ensemble methods
-- Deployment as an interactive web application
+- Stacking and other ensemble methods
+- Exploring additional engineered features, such as Age × Cholesterol
